@@ -7,7 +7,7 @@ mode: Rule
 # 日志级别: info, warning, error, debug, silent
 log-level: info
 # 外部控制端口 (用于 Web 面板)
-external-controller: :9090
+external-controller: 127.0.0.1:9090
 # 统一延迟 (对所有节点进行测速时使用统一的延迟计算方法)
 unified-delay: true
 # 实验性功能
@@ -259,7 +259,7 @@ proxy-groups:
     type: select
     use:
       - all-proxies
-    filter: "^(?!.*((?i)港|HK|Hong Kong|日|JP|Japan|美|US|United States|Balance|新|SG|Singapore|台|TW|Taiwan|韩|KR|Korea|英|UK|United Kingdom|德|DE|Germany|法|FR|France)).*$"
+    filter: "(?i)^(?!.*(港|HK|Hong Kong|日|JP|Japan|美|US|United States|Balance|新|SG|Singapore|台|TW|Taiwan|韩|KR|Korea|英|UK|United Kingdom|德|DE|Germany|法|FR|France)).*$"
 
   # 🌐 国际流量: 处理未命中的国际网站流量
   - name: 🌐 国际流量
@@ -341,26 +341,6 @@ proxy-groups:
       - 🇫🇷 France
       - 🌍 Other Regions
 
-
-  # Ⓜ️ 微软服务: 微软 Office, Outlook, OneDrive 等服务策略
-  - name: Ⓜ️ 微软服务
-    type: select
-    proxies:
-      - DIRECT
-      - 🚀 节点选择
-      - 🚀 手动切换
-      - 🇭🇰 Hong Kong
-      - 🇯🇵 Japan
-      - 🇺🇸 United States
-      - 🇸🇬 Singapore
-      - 🇹🇼 Taiwan
-      - 🇰🇷 Korea
-      - 🇬🇧 United Kingdom
-      - 🇩🇪 Germany
-      - 🇫🇷 France
-      - 🌍 Other Regions
-
-
   # 🔍 谷歌服务: Google 搜索、地图及其他非 YouTube 谷歌服务
   - name: 🔍 谷歌服务
     type: select
@@ -436,8 +416,6 @@ proxy-groups:
       - 🇫🇷 France
       - 🌍 Other Regions
       - DIRECT
-    use:
-      - all-proxies
 
   # ✈️ Telegram: Telegram 聊天应用专用策略
   - name: ✈️ Telegram
@@ -490,6 +468,7 @@ proxy-groups:
 proxy-providers:
   all-proxies:
     type: http
+    # Replace with your actual subscription URL before using provider-backed groups.
     url: "https://example.com/your-subscription-url"
     interval: 3600
     path: ./providers/all-proxies.yaml
